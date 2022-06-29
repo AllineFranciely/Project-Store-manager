@@ -40,5 +40,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "05752317-9bc7-4862-9b88-447eeebda95c",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products/",
+    "url": "http://localhost:3000/products/",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-06-29T21:09:08.403Z",
+    "modified": "2022-06-29T21:09:08.513Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]
