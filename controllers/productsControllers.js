@@ -1,4 +1,3 @@
-const connection = require('../models/connection');
 const productsService = require('../services/productsServices');
 
 const getProducts = async (_req, res) => {
