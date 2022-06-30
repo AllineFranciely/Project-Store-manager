@@ -53,20 +53,44 @@ describe('Testa a rota "/products"', () => {
       });
     });
 
-    describe('Quando o produto não existe', () => {
+    describe('Quando o produto não existe na rota "/products"', () => {
       const request = {};
       const response = {};
       beforeEach(() => {
         request.params = { id: 4 };
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub().returns();
-        sinon.stub(productsService, 'getProductsById').resolves({ code: 404, message: 'Product not found' });
+        sinon.stub(productsService, 'getAllProducts').resolves([]);
       });
       afterEach(() => {
         sinon.restore();
       });
 
-      it('retorna o statos 404', async () => {
+      it('retorna o status 404 para todos os produtos', async () => {
+        await productsController.getProducts(request, response);
+        expect(response.status.calledWith(404));
+      });
+
+      it('retorna um json com a menssagem correta de todos os produtos', async () => {
+        await productsController.getProducts(request, response);
+        expect(response.json.calledWith({ message: 'Product not found' }));
+      });
+    });
+
+    describe('Quando o produto não existe na rota "/products:id"', () => {
+      const request = {};
+      const response = {};
+      beforeEach(() => {
+        request.params = { id: 4 };
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+        sinon.stub(productsService, 'getProductsById').resolves([]);
+      });
+      afterEach(() => {
+        sinon.restore();
+      });
+
+      it('retorna o status 404', async () => {
         await productsController.getProductsId(request, response);
         expect(response.status.calledWith(404));
       });

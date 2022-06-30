@@ -50,9 +50,28 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-06-29T21:09:08.403Z",
-    "modified": "2022-06-29T21:09:08.513Z",
+    "modified": "2022-06-30T00:04:27.475Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "d37b0643-908b-43bd-8dce-7a2ee6c8cec7",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products",
+    "url": "http://localhost:3000/products",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-06-30T00:05:14.735Z",
+    "modified": "2022-06-30T00:09:49.587Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"name\": \"Corda da Mulher Maravilha\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

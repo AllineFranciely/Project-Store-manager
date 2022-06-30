@@ -39,6 +39,10 @@ describe('Testa a rota "/products/id"', () => {
     const response = await productsModel.productsById(1);
     expect(response).to.be.not.empty;
   });
+  it('retorna o objeto correto', async () => {
+    const response = await productsModel.productsById(1);
+    expect(response).to.be.equal(productsMocks[0]);
+  });
 });
 
 
