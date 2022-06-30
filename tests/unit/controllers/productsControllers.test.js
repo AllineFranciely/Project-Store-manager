@@ -102,3 +102,79 @@ describe('Testa a rota "/products"', () => {
     });
   });
 });
+
+describe('Testa a função createProduct', () => {
+  describe('Se o nome é válido', () => {
+    const request = {};
+    const response = {};
+    before(() => {
+      request.body = { name: 'Luva do Thanos' };
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(productsService, 'createProduct')
+        .resolves({ code: 201, product: { id: 4, name: 'Luva do Thanos' } })
+    });
+    after(() => {
+      sinon.restore();
+    });
+
+    it('retorna o status 201', async () => {
+      await productsController.createProduct(request, response);
+      expect(response.json.calledWith(201));
+    });
+
+    it('retorna o produto criado', async () => {
+      await productsController.createProduct(request, response);
+      expect(response.json.calledWith({ id: 4, name: 'Cellphone' }))
+    });
+  });
+  describe('Se o nome possui menos de 5 lestras', () => {
+    const request = {};
+    const response = {};
+    before(() => {
+      request.body = {
+        name: 'Luv'
+      };
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(productsService, 'createProduct')
+        .resolves({ code: 422, message: '"name" length must be at least 5 characters long' });
+    });
+    after(() => {
+      sinon.restore();
+    });
+
+    it('retorna o status 422', async () => {
+      await productsController.createProduct(request, response);
+      expect(response.status.calledWith(422));
+    });
+    it('retorna o a mensaggem esperada de erro', async () => {
+      await productsController.createProduct(request, response);
+      expect(response.json.calledWith({ message: '"name" length must be at least 5 characters long' }));
+    });
+  });
+  describe('Se não possui nome', () => {
+    const request = {};
+    const response = {};
+    before(() => {
+      request.body = { name: '' };
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(productsService, 'createProduct')
+        .resolves({ code: 400, message: '"name" is required' });
+    });
+    after(() => {
+      sinon.restore();
+    });
+
+    it('retorna o status 400', async () => {
+      await productsController.createProduct(request, response);
+      expect(response.status.calledWith(400));
+    });
+
+    it('retorna a mensagem de erro correta', async () => {
+      await productsController.createProduct(request, response);
+      expect(response.json.calledWith({ message: '"name" is required' }));
+    });
+  });
+});

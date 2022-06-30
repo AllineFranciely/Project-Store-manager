@@ -31,18 +31,37 @@ describe('Testa a rota "/products/id"', () => {
   after(() => {
     sinon.restore();
   });
+
   it('retorna um objeto', async () => {
     const response = await productsModel.productsById(1);
     expect(response).to.be.a('object');
   });
+
   it('o objeto não está vazio', async () => {
     const response = await productsModel.productsById(1);
     expect(response).to.be.not.empty;
   });
+
   it('retorna o objeto correto', async () => {
     const response = await productsModel.productsById(1);
     expect(response).to.be.equal(productsMocks[0]);
   });
 });
 
+describe('Testa a função createProduct', () => {
+  before(() => {
+    sinon.stub(connection, 'execute').resolves([{ inserId: 4 }]);
+  });
+  after(() => {
+    sinon.restore();
+  });
 
+  it('testa se retorna um objeto', async () => {
+    const response = await productsModel.createProduct({ name: 'Luva do Thanos' });
+    expect(response).to.be.a('object');
+  });
+  it('testa se retorna o objeto retornado não está vazio', async () => {
+    const response = await productsModel.createProduct({ name: 'Luva do Thanos' });
+    expect(response).to.be.not.empty;
+  });
+});

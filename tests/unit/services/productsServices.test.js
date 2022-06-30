@@ -45,3 +45,19 @@ describe('Testa a rota "/products/id"', () => {
     expect(response).to.be.equal(productsMocks[0]);
   });
 });
+
+describe('Testa a função de createProduct', () => {
+  describe('Se o nome é válido', () => {
+    before(() => {
+      sinon.stub(productsModel, 'createProduct').resolves({ id: 4 });
+    });
+    after(() => {
+      sinon.restore();
+    });
+
+    it('retorna um objeto', async () => {
+      const response = await productsService.createProduct({ name: 'Luva do Thanos' });
+      expect(response).to.be.a('object');
+    });
+  });
+});
