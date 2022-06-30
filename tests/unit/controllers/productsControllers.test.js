@@ -184,12 +184,8 @@ describe('Testa a função updateProduct', () => {
   const request = {};
   const response = {};
   before(() => {
-    request.params = {
-      id: 1,
-    }
-    request.body = {
-      name: 'Luva do Thanos'
-    };
+    request.params = { id: 1 }
+    request.body = { name: 'Luva do Thanos' };
     response.status = sinon.stub().returns(response);
     response.json = sinon.stub().returns();
     sinon.stub(productsService, 'updateProduct')
