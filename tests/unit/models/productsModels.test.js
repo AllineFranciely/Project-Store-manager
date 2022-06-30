@@ -65,3 +65,20 @@ describe('Testa a função createProduct', () => {
     expect(response).to.be.not.empty;
   });
 });
+
+describe('Testa a função updateProduct', () => {
+  before(() => {
+    sinon.stub(connection, 'execute').resolves();
+  });
+  after(() => {
+    sinon.restore();
+  });
+  it('não retorna undefined', async () => {
+    const response = await productsModel.updateProduct({ id: 1, name: 'Luva do Thanos' });
+    expect(response).to.be.not.equal(undefined);
+  });
+  it('retorna true', async () => {
+    const response = await productsModel.updateProduct({ id: 1, name: 'Luva do Thanos' });
+    expect(response).to.be.equal(true);
+  });
+});

@@ -61,3 +61,40 @@ describe('Testa a função de createProduct', () => {
     });
   });
 });
+
+describe('Testa a função updateProduct', () => {
+  describe('Se o nome não é válido', () => {
+    before(() => {
+      sinon.stub(productsModel, 'updateProduct').resolves(true);
+    });
+    after(() => {
+      sinon.restore();
+    });
+
+    it('retorna um objeto', async () => {
+      const response = await productsService.updateProduct({ id: 1, name: 'Luva de Thanos' });
+      expect(response).to.be.a('object');
+    });
+
+    it('retorna erro 400 quando o nome é branco', async () => {
+      const response = await productsService.updateProduct({ id: 1 });
+      expect(response.code).to.be.equal(400);
+    });
+
+    it('retorna o erro 422 quando o nome tem menos de 5 letras', async () => {
+      const response = await productsService.updateProduct({ id: 1, name: 'luv' });
+      expect(response.code).to.be.equal(422);
+    });
+
+    it('retorna a menssagem correta do erro 400', async () => {
+      const response = await productsService.updateProduct({ id: 1 });
+      expect(response.message).to.be.equal('"name" is required');
+    });
+
+    it('retorna a menssagem correta do erro 422', async () => {
+      const response = await productsService.updateProduct({ id: 1, name: 'luv' });
+      expect(response.message).to.be.equal('"name" length must be at least 5 characters long');
+    });
+  });
+});
+  
