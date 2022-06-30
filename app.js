@@ -8,16 +8,12 @@ app.use(bodyParser.json());
 
 const routes = require('./routes');
 
-const middlewareErro = require('./middlewares/error');
-
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.send();
 });
 
 app.use('/products', routes.productsRoutes);
-
-app.use(middlewareErro);
 
 // não remova essa exportação, é para o avaliador funcionar
 // você pode registrar suas rotas normalmente, como o exemplo acima
