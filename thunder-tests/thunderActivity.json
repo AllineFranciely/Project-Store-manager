@@ -64,12 +64,12 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-06-30T00:05:14.735Z",
-    "modified": "2022-06-30T00:09:49.587Z",
+    "modified": "2022-06-30T00:39:27.923Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"name\": \"Corda da Mulher Maravilha\"\n}",
+      "raw": "{\n    \"name\": \"As\"\n}",
       "form": []
     },
     "tests": []
