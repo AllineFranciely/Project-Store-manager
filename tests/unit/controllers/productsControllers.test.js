@@ -3,6 +3,7 @@ const { expect } = require('chai');
 const productsService = require('../../../services/productsServices');
 const productsController = require('../../../controllers/productsControllers');
 const productsMocks = require('../mocks/productsMocks');
+const productsModel = require('../../../models/productsModels');
 
 describe('Testa a rota "/products"', () => {
   describe('Testa a função getProducts', () => {
@@ -175,6 +176,84 @@ describe('Testa a função createProduct', () => {
     it('retorna a mensagem de erro correta', async () => {
       await productsController.createProduct(request, response);
       expect(response.json.calledWith({ message: '"name" is required' }));
+    });
+  });
+});
+
+describe('Testa a função updateProduct', () => {
+  const request = {};
+  const response = {};
+  before(() => {
+    request.params = {
+      id: 1,
+    }
+    request.body = {
+      name: 'Luva do Thanos'
+    };
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+    sinon.stub(productsService, 'updateProduct')
+      .resolves({ code: 200, id: 1, name: 'Luva do Thanos' });
+    sinon.stub(productsModel, 'productsById')
+      .resolves([{ id: 1, name: 'Martelo' }]);
+  });
+  afterEach(() => {
+    sinon.restore();
+  });
+  it('retorna um objeto', async () => {
+    await productsController.updateProduct(request, response);
+    expect(response).to.be.a('object');
+  });
+});
+
+describe('Testa a função deleteProduct', () => {
+  describe('se o ID é válido', () => {
+    const request = {};
+    const response = {};
+    before(() => {
+      request.params = {
+        id: 1,
+      }
+      response.status = sinon.stub().returns(response);
+      response.end = sinon.stub().returns();
+      sinon.stub(productsService, 'deleteProduct')
+        .resolves({ code: 204 });
+      sinon.stub(productsModel, 'productsById').resolves([productsMocks[0]]);
+    });
+    after(() => {
+      sinon.restore();
+    });
+
+    it('retorna um objeto', async () => {
+      await productsController.deleteProduct(request, response);
+      expect(response).to.be.a('object');
+    });
+  });
+
+  describe('se o ID é inválido', () => {
+    const request = {};
+    const response = {};
+    before(() => {
+      request.params = {
+        id: 10,
+      }
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(productsService, 'deleteProduct')
+        .resolves({ code: 404, message: 'Product not found' });
+    });
+    after(() => {
+      sinon.restore();
+    });
+
+    it('retorna o erro 404', async () => {
+      await productsController.deleteProduct(request, response);
+      expect(response.json.calledWith(404));
+    });
+
+    it('retorna a menssagem de erro correta', async () => {
+      await productsController.deleteProduct(request, response);
+      expect(response.json.calledWith({ message: 'Product not found' }));
     });
   });
 });

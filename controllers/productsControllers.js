@@ -1,3 +1,4 @@
+const connection = require('../models/connection');
 const productsService = require('../services/productsServices');
 
 const getProducts = async (_req, res) => {
@@ -30,7 +31,7 @@ const createProduct = async (req, res, _next) => {
   }
 
   const newProduct = await productsService.createProduct({ name });
-  
+
   return res.status(201).json(newProduct);
 };
 
@@ -44,9 +45,19 @@ const updateProduct = async (req, res) => {
   return res.status(code).json({ id, name });
 };
 
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+  const { code, message } = await productsService.deleteProduct(id);
+  if (message) {
+    return res.status(code).json({ message });
+  }
+  res.status(code).end();
+};
+
 module.exports = {
   getProducts,
   getProductsId,
   createProduct,
   updateProduct,
+  deleteProduct,
 };

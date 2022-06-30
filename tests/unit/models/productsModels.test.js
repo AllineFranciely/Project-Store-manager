@@ -73,12 +73,27 @@ describe('Testa a função updateProduct', () => {
   after(() => {
     sinon.restore();
   });
+
   it('não retorna undefined', async () => {
     const response = await productsModel.updateProduct({ id: 1, name: 'Luva do Thanos' });
     expect(response).to.be.not.equal(undefined);
   });
+
   it('retorna true', async () => {
     const response = await productsModel.updateProduct({ id: 1, name: 'Luva do Thanos' });
+    expect(response).to.be.equal(true);
+  });
+});
+
+describe('Testa a função deleteProduct', () => {
+  before(() => {
+    sinon.stub(connection, 'execute').resolves();
+  });
+  after(() => {
+    sinon.restore();
+  });
+  it('retorna true', async () => {
+    const response = await productsModel.deleteProduct(1);
     expect(response).to.be.equal(true);
   });
 });

@@ -98,3 +98,47 @@ describe('Testa a função updateProduct', () => {
   });
 });
   
+describe('Testa a função deleteProduct', () => {
+  describe('se o ID é válido', () => {
+    before(() => {
+      sinon.stub(productsModel, 'deleteProduct').resolves(true);
+      sinon.stub(productsModel, 'productsById').resolves([productsMocks[0]]);
+    });
+    after(() => {
+      sinon.restore();
+    });
+    it('retorna um objeto', async () => {
+      const response = await productsService.deleteProduct(99);
+      expect(response).to.be.a('object');
+    });
+
+    it('retorna o código 204', async () => {
+      const response = await productsService.deleteProduct(1);
+      expect(response).to.be.deep.equal({ code: 204 });
+    });
+  });
+  describe('se o ID é inválido', () => {
+    before(() => {
+      sinon.stub(productsModel, 'deleteProduct').resolves(true);
+      sinon.stub(productsModel, 'productsById').resolves([]);
+    });
+    after(() => {
+      sinon.restore();
+    });
+
+    it('não retorna undefined', async () => {
+      const response = await productsService.deleteProduct(10);
+      expect(response).to.be.not.equal(undefined);
+    });
+
+    it('retorna o código 404', async () => {
+      const response = await productsService.deleteProduct(10);
+      expect(response.code).to.be.equal(404);
+    });
+
+    it('retorna a menssagem correta de erro', async () => {
+      const response = await productsService.deleteProduct(10);
+      expect(response.message).to.be.equal('Product not found');
+    });
+  });
+});
