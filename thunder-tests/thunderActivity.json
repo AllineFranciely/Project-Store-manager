@@ -60,16 +60,16 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3000/products",
-    "url": "http://localhost:3000/products",
-    "method": "POST",
+    "url": "http://localhost:3000/products/",
+    "method": "GET",
     "sortNum": 0,
     "created": "2022-06-30T00:05:14.735Z",
-    "modified": "2022-06-30T00:39:27.923Z",
+    "modified": "2022-06-30T13:39:39.941Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"name\": \"As\"\n}",
+      "raw": "{\n    \"name\": \"Bracelete da Mulher Maravilha\"\n}",
       "form": []
     },
     "tests": []
