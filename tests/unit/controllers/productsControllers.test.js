@@ -207,9 +207,7 @@ describe('Testa a função deleteProduct', () => {
     const request = {};
     const response = {};
     before(() => {
-      request.params = {
-        id: 1,
-      }
+      request.params = {id: 1 }
       response.status = sinon.stub().returns(response);
       response.end = sinon.stub().returns();
       sinon.stub(productsService, 'deleteProduct')
